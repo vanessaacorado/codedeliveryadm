@@ -3,26 +3,29 @@
 namespace CodeDelivery\Http\Controllers;
 use Illuminate\HttpResponse;
 use Illuminate\Http\Request;
+use CodeDelivery\Repositories\ProductRepository;
 use CodeDelivery\Repositories\CategoryRepository;
 use CodeDelivery\Http\Requests;
-use CodeDelivery\Http\Requests\CategoryRequest;
+use CodeDelivery\Http\Requests\ProductRequest;
 use CodeDelivery\Http\Controllers\Controller;
 
-class CategoriesController extends Controller
+class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    private $product;
     private $category;
-    public function __construct(CategoryRepository $category){
+    public function __construct(CategoryRepository $category,ProductRepository $product){
+        $this->product = $product;
         $this->category = $category;
         
     }
     public function index()
-    {   $categories=$this->category->paginate(15);
-        return view('admin.categories.index', compact('categories'));
+    {   $products=$this->product->paginate(15);
+        return view('admin.products.index', compact('products'));
     }
 
     /**
@@ -32,7 +35,8 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = $this->category->lists('name','id');
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -41,10 +45,10 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(ProductRequest $request)
     {
-        $valor=$this->category->create($request->all());
-        return Redirect()->route('admin.categories.index');
+        $valor=$this->product->create($request->all());
+        return Redirect()->route('admin.products.index');
     }
 
     /**
@@ -66,8 +70,9 @@ class CategoriesController extends Controller
      */
     public function edit( $id)
     {
-        $cat= $this->category->find($id);
-        return view('admin.categories.edit', compact('cat'));
+        $prod= $this->product->find($id);
+        $categories = $this->category->lists('name','id');
+        return view('admin.products.edit', compact('prod', 'categories'));
     }
 
     /**
@@ -77,10 +82,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        $cat = $this->category->find($id)->update($request->all());
-        return Redirect()->route('admin.categories.index');
+        $prod = $this->product->find($id)->update($request->all());
+        return Redirect()->route('admin.products.index');
     }
 
     /**
@@ -91,7 +96,7 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $cat = $this->category->find($id)->delete();
-        return Redirect()->route('admin.categories.index');
+        $cat = $this->product->find($id)->delete();
+        return Redirect()->route('admin.products.index');
     }
 }

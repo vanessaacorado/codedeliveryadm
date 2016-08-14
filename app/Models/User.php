@@ -14,7 +14,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 class User extends Model implements Transformable, AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
     use TransformableTrait, Authenticatable, Authorizable, CanResetPassword;
-;
+
 public function client(){
         
         return $this->hasOne(Client::class);

@@ -1,26 +1,25 @@
 @extends('app')
 @section('content')
 <div class="container">
-    <h3>Categorias</h3>
-    <a href="{{route('admin.categories.create')}}" class="btn btn-success">Nova Categoria</a>
+    <h3>Pedidos</h3>
+
     <br>
     <br>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nome</th>
+              
                 <th>Ação</th>
             </tr>
         </thead>
         
         <tbody>
-            @foreach($categories as $cat)
+            @foreach($orders as $ord)
             <tr>
-                <td>{{$cat->id}}</td>
-                <td>{{$cat->name}}</td>
+                <td>{{$ord->id}}</td>
                 <td>
-                    <a class="btn btn-default btn-sm" href="{{route('admin.categories.edit',['id'=>$cat->id])}}">
+                    <a class="btn btn-default btn-sm" href="">
                     Editar
                     </a>
                     
@@ -30,7 +29,7 @@
         </tbody>
     
     </table>
-{!! $categories->render() !!}
+{!! $orders->render() !!}
 </div>
 
 @endsection

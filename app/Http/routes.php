@@ -43,4 +43,7 @@ Route::post('products/update/{id}', ['as'=>'products.update', 'uses'=>'ProductsC
 Route::get('products/delete/{id}', ['as'=>'products.delete', 'uses'=>'ProductsController@destroy']);
     
     
+Route::get('orders', ['as'=>'orders', 'uses'=>'OrdersController@index']);
+Route::get('orders', ['as'=>'orders.index', 'uses'=>'OrdersController@index']);
+    
 });

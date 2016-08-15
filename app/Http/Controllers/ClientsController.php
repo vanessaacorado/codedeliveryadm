@@ -4,6 +4,7 @@ namespace CodeDelivery\Http\Controllers;
 use Illuminate\HttpResponse;
 use Illuminate\Http\Request;
 use CodeDelivery\Repositories\ClientRepository;
+use CodeDelivery\Services\ClientService;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\ClientRequest;
 use CodeDelivery\Http\Controllers\Controller;
@@ -15,14 +16,15 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $client;
-    public function __construct(ClientRepository $client){
+    private $client, $service;
+    public function __construct(ClientRepository $client, ClientService $service){
         $this->client = $client;
+        $this->service = $service;
         
     }
     public function index()
-    {   $client=$this->client->paginate(15);
-    {  
+    {   $clients=$this->client->paginate(15);
+      
         return view('admin.clients.index', compact('clients'));
     }
 
@@ -44,7 +46,7 @@ class ClientsController extends Controller
      */
     public function store(ClientRequest $request)
     {
-        $valor=$this->client->create($request->all());
+        $valor=$this->service->create($request->all());
         return Redirect()->route('admin.clients.index');
     }
 
@@ -67,8 +69,8 @@ class ClientsController extends Controller
      */
     public function edit( $id)
     {
-        $cat= $this->client->find($id);
-        return view('admin.client.edit', compact('cli'));
+        $cli= $this->client->find($id);
+        return view('admin.clients.edit', compact('cli'));
     }
 
     /**
@@ -80,7 +82,9 @@ class ClientsController extends Controller
      */
     public function update(ClientRequest $request, $id)
     {
-        $cat = $this->client->find($id)->update($request->all());
+        $data= $request->all();
+        
+        $cli = $this->service->save($request->all(), $id);
         return Redirect()->route('admin.clients.index');
     }
 

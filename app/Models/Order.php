@@ -5,7 +5,7 @@ namespace CodeDelivery\Models;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
-
+use \CodeDelivery\Models\OrderItem;
 class Order extends Model implements Transformable
 {
     use TransformableTrait;
@@ -22,5 +22,8 @@ class Order extends Model implements Transformable
     public function client(){
         return $this->hasMany(Client::class);
     }
+    public function items(){
+            return $this->hasMany(OrderItem::class);
+        }
 
 }

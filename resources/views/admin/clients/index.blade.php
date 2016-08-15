@@ -1,8 +1,8 @@
 @extends('app')
 @section('content')
 <div class="container">
-    <h3>Categorias</h3>
-    <a href="{{route('admin.categories.create')}}" class="btn btn-success">Nova Categoria</a>
+    <h3>Clientes</h3>
+    <a href="{{route('admin.clients.create')}}" class="btn btn-success">Nova Categoria</a>
     <br>
     <br>
     <table class="table table-bordered">
@@ -15,12 +15,12 @@
         </thead>
         
         <tbody>
-            @foreach($categories as $cat)
+            @foreach($clients as $cli)
             <tr>
-                <td>{{$cat->id}}</td>
-                <td>{{$cat->name}}</td>
+                <td>{{$cli->id}}</td>
+                <td>{{$cli->users->name}}</td>
                 <td>
-                    <a class="btn btn-default btn-sm" href="{{route('admin.categories.edit',['id'=>$cat->id])}}">
+                    <a class="btn btn-default btn-sm" href="{{route('admin.clients.edit',['id'=>$cli->id])}}">
                     Editar
                     </a>
                     
@@ -30,7 +30,7 @@
         </tbody>
     
     </table>
-{!! $categories->render() !!}
+{!! $clients->render() !!}
 </div>
 
 @endsection

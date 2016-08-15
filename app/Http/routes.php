@@ -25,6 +25,14 @@ Route::get('categories/edit/{id}', ['as'=>'categories.edit', 'uses'=>'Categories
 Route::post('categories/update/{id}', ['as'=>'categories.update', 'uses'=>'CategoriesController@update']);
 Route::get('categories/delete/{id}', ['as'=>'categories.delete', 'uses'=>'CategoriesController@destroy']);
 
+Route::get('clients', ['as'=>'clients', 'uses'=>'ClientsController@index']);
+Route::get('clients', ['as'=>'clients.index', 'uses'=>'ClientsController@index']);
+Route::get('clients/create', ['as'=>'clients.create', 'uses'=>'ClientsController@create']);
+Route::post('clients/create', ['as'=>'clients.create', 'uses'=>'ClientsController@store']);
+Route::get('clients/edit/{id}', ['as'=>'clients.edit', 'uses'=>'ClientsController@edit']);
+Route::post('clients/update/{id}', ['as'=>'clients.update', 'uses'=>'ClientsController@update']);
+Route::get('clients/delete/{id}', ['as'=>'clients.delete', 'uses'=>'ClientsController@destroy']);
+
 
 Route::get('products', ['as'=>'products', 'uses'=>'ProductsController@index']);
 Route::get('products', ['as'=>'products.index', 'uses'=>'ProductsController@index']);

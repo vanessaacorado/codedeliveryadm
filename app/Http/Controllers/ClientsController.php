@@ -3,27 +3,27 @@
 namespace CodeDelivery\Http\Controllers;
 use Illuminate\HttpResponse;
 use Illuminate\Http\Request;
-use CodeDelivery\Repositories\CategoryRepository;
+use CodeDelivery\Repositories\ClientRepository;
 use CodeDelivery\Http\Requests;
-use CodeDelivery\Http\Requests\CategoryRequest;
+use CodeDelivery\Http\Requests\ClientRequest;
 use CodeDelivery\Http\Controllers\Controller;
 
-class CategoriesController extends Controller
+class ClientsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $category;
-    public function __construct(CategoryRepository $category){
-        $this->category = $category;
+    private $client;
+    public function __construct(ClientRepository $client){
+        $this->client = $client;
         
     }
     public function index()
-    { $categories=$this->category->paginate(15);
-      
-        return view('admin.categories.index', compact('categories'));
+    {   $client=$this->client->paginate(15);
+    {  
+        return view('admin.clients.index', compact('clients'));
     }
 
     /**
@@ -33,7 +33,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.clients.create');
     }
 
     /**
@@ -42,10 +42,10 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(ClientRequest $request)
     {
-        $valor=$this->category->create($request->all());
-        return Redirect()->route('admin.categories.index');
+        $valor=$this->client->create($request->all());
+        return Redirect()->route('admin.clients.index');
     }
 
     /**
@@ -67,8 +67,8 @@ class CategoriesController extends Controller
      */
     public function edit( $id)
     {
-        $cat= $this->category->find($id);
-        return view('admin.categories.edit', compact('cat'));
+        $cat= $this->client->find($id);
+        return view('admin.client.edit', compact('cli'));
     }
 
     /**
@@ -78,10 +78,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(ClientRequest $request, $id)
     {
-        $cat = $this->category->find($id)->update($request->all());
-        return Redirect()->route('admin.categories.index');
+        $cat = $this->client->find($id)->update($request->all());
+        return Redirect()->route('admin.clients.index');
     }
 
     /**
@@ -92,7 +92,7 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $cat = $this->category->find($id)->delete();
-        return Redirect()->route('admin.categories.index');
+        $cat = $this->client->find($id)->delete();
+        return Redirect()->route('admin.clients.index');
     }
 }

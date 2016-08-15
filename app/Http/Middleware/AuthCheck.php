@@ -19,7 +19,7 @@ class AuthCheck
             
             return redirect('/auth/login');
         }
-        if(Auth::user()->role <> 'admin'){
+        if(Auth::user()->rules <> 'admin'){
             return redirect('/auth/login');
         }
         return $next($request);

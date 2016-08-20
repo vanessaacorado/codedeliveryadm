@@ -15,7 +15,7 @@ class User extends Model implements Transformable, AuthenticatableContract, Auth
 {
     use TransformableTrait, Authenticatable, Authorizable, CanResetPassword;
 
-public function client(){
+    public function client(){
         
         return $this->hasOne(Client::class);
     }                                    

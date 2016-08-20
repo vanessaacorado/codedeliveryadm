@@ -15,7 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(["prefix"=>'admin','middleware'=>'auth.check', 'as'=>'admin.'],function(){
+Route::group(['prefix'=>'customer','middleware'=>'auth.check:client', 'as'=>'customer.'], function(){
+
+	Route::get('order', ['as'=>'order', 'uses'=>'CheckoutController@index']);
+	Route::get('order/create', ['as'=>'order.create', 'uses'=>'CheckoutController@create']);
+	Route::post('order/store', ['as'=>'order.store', 'uses'=>'CheckoutController@store']);
+
+
+
+});
+
+Route::group(["prefix"=>'admin','middleware'=>'auth.check:admin', 'as'=>'admin.'],function(){
     
 Route::get('categories', ['as'=>'categories', 'uses'=>'CategoriesController@index']);
 Route::get('categories', ['as'=>'categories.index', 'uses'=>'CategoriesController@index']);
@@ -47,5 +57,11 @@ Route::get('orders', ['as'=>'orders', 'uses'=>'OrdersController@index']);
 Route::get('orders', ['as'=>'orders.index', 'uses'=>'OrdersController@index']);
 Route::get('orders/edit/{id}', ['as'=>'orders.edit', 'uses'=>'OrdersController@edit']);
 Route::post('orders/update/{id}', ['as'=>'orders.update', 'uses'=>'OrdersController@update']);
+
+Route::get('cupoms', ['as'=>'cupoms.index', 'uses'=>'CupomsController@index']);
+Route::get('cupoms/create', ['as'=>'cupoms.create', 'uses'=>'CupomsController@create']);
+Route::post('cupoms/create', ['as'=>'cupoms.create', 'uses'=>'CupomsController@store']);
+//Route::get('cupoms/edit/{id}', ['as'=>'cupoms.edit', 'uses'=>'CupomsController@edit']);
+Route::post('cupoms/store/{id}', ['as'=>'cupoms.update', 'uses'=>'CupomsController@update']);
     
 });

@@ -12,7 +12,7 @@ use CodeDelivery\Validators\CupomRepositoryValidator;
  * Class CupomRepositoryRepositoryEloquent
  * @package namespace CodeDelivery\Repositories;
  */
-class CupomRepositoryRepositoryEloquent extends BaseRepository implements CupomRepositoryRepository
+class CupomRepositoryEloquent extends BaseRepository implements CupomRepositoryRepository
 {
     /**
      * Specify Model class name

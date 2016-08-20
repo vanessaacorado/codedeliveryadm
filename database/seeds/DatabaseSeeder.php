@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use \CodeDelivery\Models\User;
+use \CodeDelivery\Models\Client;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -22,11 +23,21 @@ class DatabaseSeeder extends Seeder
                 'rules'=>'admin',
                 'remember_token' => str_random(10),
             ]
-        );
+        )->client()->save(factory(Client::class)->make());
 
+        factory(User::class)->create(
+            [
+                'name' => 'user',
+                'email' => 'user@user.com',
+                'password' => bcrypt(123456),
+                'rules'=>'client',
+                'remember_token' => str_random(10),
+            ]
+        )->client()->save(factory(Client::class)->make());
         $this->call(UserTableSeeder::class);
         $this->call(OrderTableSeeder::class);
         $this->call(CategoryTableSeeder::class);
+        $this->call(CupomTableSeeder::class);
         Model::reguard();
     }
 }

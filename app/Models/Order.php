@@ -7,6 +7,7 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use \CodeDelivery\Models\OrderItem;
 use \CodeDelivery\Models\Client;
+use \CodeDelivery\Models\Cupom;
 class Order extends Model implements Transformable
 {
     use TransformableTrait;
@@ -23,6 +24,9 @@ class Order extends Model implements Transformable
     
     public function client(){
         return $this->belongsTo(Client::class);
+    }
+    public function cupom(){
+        return $this->belongsTo(Cupom::class);
     }
     public function items(){
             return $this->hasMany(OrderItem::class);

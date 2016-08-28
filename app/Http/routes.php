@@ -14,7 +14,28 @@
 Route::get('/', function () {
     return view('welcome');
 });
+//Rota de autorização de apis client e DeliveryMan
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
+//Rotas da Api Client e DeliveryMan
+Route::group(['prefix'=>'api','middleware'=>'oauth', 'as'=>'api.'], function(){
+	Route::group(['prefix'=>'client','middleware'=>'oauth.check:client', 'as'=>'client.'], function(){
+		
+		Route::resource('order', 'Api\Client\ClientCheckoutController',['except'=>['edit', 'destroy', 'create']]);
+	
+	});
+	Route::group(['prefix'=>'deliveryman','middleware'=>'oauth.check:deliveryman','as'=>'deliveryman.'], function(){
+		
+		Route::resource('order', 'Api\Deliveryman\DeliverymanCheckoutController',['except'=>['edit', 'destroy', 'create', 'store']]);
+		Route::patch('order/{id}/update-status', 'Api\Deliveryman\DeliverymanCheckoutController@updateStatus');
+	
+	
+	});
+	
+});
 
+//Rota para area do cliente
 Route::group(['prefix'=>'customer','middleware'=>'auth.check:client', 'as'=>'customer.'], function(){
 
 	Route::get('order', ['as'=>'order', 'uses'=>'CheckoutController@index']);
@@ -24,7 +45,7 @@ Route::group(['prefix'=>'customer','middleware'=>'auth.check:client', 'as'=>'cus
 
 
 });
-
+//Rota para area administrativa
 Route::group(["prefix"=>'admin','middleware'=>'auth.check:admin', 'as'=>'admin.'],function(){
     
 Route::get('categories', ['as'=>'categories', 'uses'=>'CategoriesController@index']);

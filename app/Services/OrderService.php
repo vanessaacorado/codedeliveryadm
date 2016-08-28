@@ -3,6 +3,7 @@ namespace CodeDelivery\Services;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\ProductRepository;
 use CodeDelivery\Repositories\CupomRepository;
+use CodeDelivery\Models\Order;
 class OrderService{
 	private $order;
 	private $cupom;
@@ -44,8 +45,22 @@ class OrderService{
 				$orders->total = $total - $cupons->value;
 			}
 			$orders->save();
+			return $orders;
 		  
 	
 	 }
-  
+  public function updateStatus($id, $idDeliveryMan,
+                                 $status){
+        $order = $this->order->getByIdAndDeliveryman($id, $idDeliveryMan);
+		
+        if($order instanceof Order){
+            
+            $order->status = $status;
+            $order->save();
+            return $order;
+			
+				
+        }
+        return false;
+    }
 }
